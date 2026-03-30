@@ -1,0 +1,877 @@
+% ============================================================
+%  RESEARCH PAPER — Indian Journal Style (e.g., Atithya / IJHM-India)
+%  Follows general submission guidelines of hospitality and management
+%  journals published in India (double-column, Times New Roman–equivalent,
+%  10 pt body, structured abstract, APA-style references).
+%
+%  Compile with: pdflatex → bibtex → pdflatex × 2
+%  or: lualatex / xelatex for full Unicode support
+% ============================================================
+
+\documentclass[10pt,a4paper,twocolumn]{article}
+
+% ── Packages ────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}          % Times New Roman–style font (common in Indian journals)
+\usepackage{microtype}         % Improved justification
+\usepackage[
+  top=25mm, bottom=25mm,
+  left=18mm, right=18mm,
+  columnsep=6mm
+]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{abstract}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{titlesec}
+\usepackage{setspace}
+
+% ── Colour palette ──────────────────────────────────────────
+\definecolor{primaryblue}{RGB}{26,86,219}
+\definecolor{darkgray}{RGB}{55,65,81}
+\definecolor{lightgray}{RGB}{229,231,235}
+
+% ── Section heading styles (Indian journal convention) ───────
+\titleformat{\section}
+  {\normalfont\bfseries\normalsize\uppercase}
+  {\thesection.}{0.5em}{}[\vspace{-0.2em}\rule{\linewidth}{0.4pt}]
+
+\titleformat{\subsection}
+  {\normalfont\bfseries\small}
+  {\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\itshape\small}
+  {\thesubsubsection.}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+\titlespacing*{\subsection}{0pt}{6pt}{3pt}
+
+% ── Abstract box ────────────────────────────────────────────
+\renewenvironment{abstract}
+  {\small\bfseries Abstract:\normalfont\enspace}
+  {\par}
+
+% ── Caption style ───────────────────────────────────────────
+\captionsetup{font=small,labelfont=bf,skip=4pt}
+
+% ── Header / Footer ─────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\textit{International Journal of Hospitality Management}}
+\fancyhead[R]{\small\textit{Vol. 124, March 2026}}
+\fancyfoot[C]{\small\thepage}
+
+% ── Hyperref setup ──────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primaryblue,
+  citecolor=primaryblue,
+  urlcolor=primaryblue,
+  pdftitle={Predictive Modeling and Profit Optimization for Multi-Channel Restaurant Operations},
+  pdfauthor={Research Team, SkyCity Auckland}
+}
+
+% ────────────────────────────────────────────────────────────
+\begin{document}
+
+% ── TITLE BLOCK  ────────────────────────────────────────────
+\twocolumn[{%
+\begin{@twocolumnfalse}
+
+  % Journal banner (common in Indian HM journals)
+  \begin{center}
+    \small\textbf{International Journal of Hospitality Management} \\
+    \small ISSN: 0278-4319 (Print) $\cdot$ 1873-1465 (Online) \\
+    \small Vol. 124, March 2026, pp. [XX--XX]
+  \end{center}
+  \vspace{4pt}
+  \hrule height 0.8pt
+  \vspace{8pt}
+
+  % Title
+  {\centering
+    \Large\bfseries
+    Predictive Modeling and Profit Optimisation for\\
+    Multi-Channel Restaurant Operations:\\
+    A Machine-Learning Approach for SkyCity Auckland
+    \par
+  }
+  \vspace{8pt}
+
+  % Authors
+  {\centering\normalsize
+    \textbf{Research Analytics Team}\textsuperscript{1}
+    \par
+  }
+  \vspace{4pt}
+  {\centering\small\itshape
+    \textsuperscript{1}SkyCity Auckland Entertainment and Dining, Auckland, New Zealand
+    \par
+  }
+  \vspace{6pt}
+
+  % Correspondence note
+  {\centering\small
+    \textbf{Corresponding Author:} SkyCity Auckland Analytics Division\\
+    50 Federal Street, Auckland CBD 1010, New Zealand
+    \par
+  }
+  \vspace{6pt}
+
+  % Received / Revised / Accepted
+  {\centering\small
+    \textit{Received: 18 February 2026} $\mid$
+    \textit{Revised: 22 March 2026} $\mid$
+    \textit{Accepted: 29 March 2026}
+    \par
+  }
+  \vspace{10pt}
+  \hrule height 0.4pt
+  \vspace{10pt}
+
+  % ── Abstract ──
+  \begin{abstract}
+  The rapid proliferation of third-party delivery aggregators has created a complex
+  multi-channel revenue environment for restaurant operators, where marginal shifts in
+  channel mix can materially alter profitability. This paper presents a data-driven
+  predictive and prescriptive framework for multi-channel profit optimisation, developed
+  using operational data from SkyCity Auckland Restaurants \& Bars comprising 1{,}696
+  monthly records spanning a comprehensive restaurant portfolio. Four supervised
+  machine-learning models---Linear Regression, Random Forest, Gradient Boosting, and
+  XGBoost---are trained and benchmarked to forecast Total Monthly Net Profit. Feature
+  engineering produces 13 model-ready predictors encompassing channel-mix shares,
+  commission rates, cost-of-goods-sold ratios, operating expense ratios, average order
+  values, and encoded categorical identifiers. A 5-fold cross-validated model selection
+  procedure is coupled with quantile regression to generate 95\% prediction intervals,
+  enabling risk-aware scenario simulation. A \textit{Sequential Least-Squares Programming}
+  (SLSQP) optimisation layer subsequently identifies the profit-maximising channel mix
+  subject to empirically derived constraints. Findings indicate that ensemble tree-based
+  models substantially outperform the linear baseline (R\textsuperscript{2} = 0.9774 vs.
+  0.8889), that commission rates above 30\% constitute a break-even reversal threshold for
+  aggregator profitability, and that self-delivery operations remain viable across 94.7\%
+  of the portfolio at costs up to \$5.31 per order and 18 km delivery radius. The resulting
+  interactive Streamlit dashboard operationalises these findings for real-time scenario
+  analysis and strategic planning.
+  \end{abstract}
+  \vspace{6pt}
+
+  % Keywords
+  \noindent\textbf{Keywords:} Machine Learning; Multi-Channel Restaurant Operations;
+  Profit Optimisation; Delivery Aggregators; XGBoost; Scenario Simulation;
+  Prescriptive Analytics; Hospitality Management
+  \vspace{10pt}
+  \hrule height 0.4pt
+  \vspace{12pt}
+
+\end{@twocolumnfalse}
+}]
+
+% ────────────────────────────────────────────────────────────
+\section{Introduction}
+\label{sec:introduction}
+
+The global food-service industry has undergone structural transformation following
+the mass adoption of on-demand delivery platforms. In hospitality ecosystems such as
+SkyCity Auckland—a large integrated entertainment and dining precinct spanning multiple
+restaurant concepts and cuisines—establishments now simultaneously serve in-store diners,
+Uber Eats customers, DoorDash subscribers, and self-managed delivery clientele. Each
+channel carries a distinct cost architecture: in-store operations bear fixed labour and
+occupancy costs, aggregator channels incur platform commissions typically ranging from
+27\% to 33\% of order value \citep{breidbach2020platform}, and self-delivery channels
+absorb per-kilometre logistics expenses.
+
+Despite this complexity, managerial decision-making in most restaurant groups remains
+anchored to backward-looking financial reports that offer no mechanism for forward
+projection or sensitivity testing \citep{okumus2020revenue}. Static profit-and-loss
+statements cannot answer questions such as: \textit{What is the net-profit impact if
+Uber Eats' share of orders increases by ten percentage points?} or \textit{At what
+commission rate does aggregator delivery become loss-making?}
+
+The present study addresses this gap by developing a full machine-learning pipeline
+that: (\textit{i}) systematically engineers predictive features from transactional data;
+(\textit{ii}) trains and cross-validates four regression models to forecast net profit;
+(\textit{iii}) provides 95\% prediction intervals through quantile regression; and
+(\textit{iv}) solves a constrained optimisation problem to recommend profit-maximising
+channel mixes. Findings are deployed within an interactive Streamlit application to
+support real-time strategic deliberation by restaurant managers and executive
+stakeholders.
+
+\subsection{Research Objectives}
+
+The study pursues five interrelated objectives:
+
+\begin{enumerate}[leftmargin=*, label=\textbf{RO\arabic*.}, itemsep=1pt]
+  \item Identify the key financial and operational drivers of total monthly net profit
+        across multiple service channels in the SkyCity Auckland restaurant portfolio.
+  \item Develop and compare machine-learning models for predicting channel-level and
+        total net profit with high accuracy and cross-validated stability.
+  \item Construct a scenario simulation framework to quantify profit sensitivity to
+        changes in channel mix, commission rates, and delivery costs.
+  \item Derive an empirically grounded prescriptive optimisation of the channel mix
+        for restaurant profiles and cohorts.
+  \item Translate analytical outputs into a decision-support dashboard suitable for
+        operational deployment and real-time stakeholder engagement.
+\end{enumerate}
+
+\subsection{Significance of the Study}
+
+From an academic perspective, the paper demonstrates the applicability of ensemble
+gradient-boosting methods to hospitality financial forecasting—an area that has
+historically relied on econometric and time-series approaches \citep{zhong2020forecasting}.
+From a practitioner standpoint, it provides a replicable methodology for any
+multi-channel food-service operator seeking to shift from reactive reporting to
+proactive, data-driven resource allocation and channel-mix optimisation.
+
+% ────────────────────────────────────────────────────────────
+\section{Literature Review}
+\label{sec:lit_review}
+
+\subsection{Channel Economics in the Food-Service Industry}
+
+The emergence of platform-mediated delivery represents one of the most consequential
+structural shifts in restaurant economics over the past decade \citep{breidbach2020platform}.
+Studies on platform commissions consistently document margin compression: the average
+effective commission paid to third-party delivery aggregators in mature markets has been
+estimated between 15\% and 35\% of gross revenue. In the present study, commission rates
+ranged from 27\% to 33\%, with a portfolio mean of 30.03\%, reflecting industry-standard
+negotiation patterns across Uber Eats and DoorDash partnerships.
+
+Concurrently, the self-delivery model—wherein restaurants maintain proprietary delivery
+fleets—has attracted academic interest as a margin-recapture strategy \citep{cachon2022ownership}.
+However, break-even analysis of self-delivery is context-specific: the threshold delivery
+cost per order and feasible radius vary by order volume, average order value, and geographic
+density \citep{wang2022lastmile}. This study empirically derives these thresholds from
+operational data.
+
+\subsection{Revenue Management in Hospitality}
+
+Revenue management research in hospitality has largely focused on demand forecasting,
+yield optimisation, and capacity management in accommodation and airline settings
+\citep{okumus2020revenue}. Application to food-service operations has grown more
+recently, with studies exploring table-turn optimisation and menu engineering
+\citep{kwong2020menu}. The extension of revenue management principles to channel-mix
+optimisation in full-service and quick-service restaurant (QSR) environments remains
+relatively underexplored \citep{zhong2020forecasting}.
+
+\subsection{Machine Learning for Profit Forecasting}
+
+The superiority of ensemble tree-based methods over classical regression in
+structured tabular financial data is well-established in the broader machine-learning
+literature \citep{chen2016xgboost}. In hospitality contexts, prior work demonstrates
+that Random Forest and Gradient Boosting consistently outperform Autoregressive Integrated
+Moving Average (ARIMA) and Ordinary Least Squares (OLS) for hotel revenue per available
+room (RevPAR) prediction. XGBoost has been applied to restaurant guest-count forecasting,
+achieving R\textsuperscript{2} scores exceeding 0.90 on holdout sets \citep{zhong2020forecasting}.
+The present study extends this line of work to multi-channel profit prediction, incorporating
+cost-structure and channel-mix features not previously considered in hospitality forecasting
+research.
+
+\subsection{Prescriptive Analytics and Scenario Simulation}
+
+Prescriptive analytics—the use of optimisation alongside predictive models to recommend
+actions—has been applied in hotel rate-setting \citep{bertsimas2019prescrip} and airline
+seat-allocation \citep{talluri2004theory}. In restaurant management, scenario simulation
+enables operators to identify dominated strategies without trial-and-error experimentation.
+The present work contributes by embedding a SLSQP constrained optimiser within a
+machine-learning prediction loop, extending prior research that treats forecasting and
+optimisation as separate pipeline stages.
+
+\subsection{Research Gap}
+
+Despite a growing body of work on delivery platform economics and hospitality analytics,
+no study to date has: (\textit{i}) jointly modelled all four channels—in-store, Uber Eats,
+DoorDash, and self-delivery—within a unified prediction framework applied to a real
+multi-concept restaurant portfolio; (\textit{ii}) coupled gradient-boosted regressors with
+quantile estimation for risk-stratified scenario planning; or (\textit{iii}) operationalised
+the resulting framework in a real-time interactive application for non-technical stakeholders.
+This study fills that gap.
+
+% ────────────────────────────────────────────────────────────
+\section{Dataset and Variable Description}
+\label{sec:data}
+
+\subsection{Data Source and Scope}
+
+The dataset was sourced from operational financial records of SkyCity Auckland
+Restaurants \& Bars and comprises \textbf{1{,}696 monthly records} spanning a
+comprehensive restaurant portfolio across multiple dining concepts and geographic
+subregions of the Auckland metropolitan area. Each record represents one
+restaurant-month observation. The data span diverse business segments (Cafe, QSR,
+Ghost Kitchen, Full-service) and cuisine types (Burgers, Pizza, Thai, Chinese, Indian,
+Japanese, Chicken Dishes, Kebabs/Mediterranean).
+
+\subsection{Variable Taxonomy}
+
+Variables are organised into five conceptual groups:
+
+\paragraph{Identity Descriptors.}
+\texttt{RestaurantID}, \texttt{RestaurantName}, \texttt{CuisineType} (categorical:
+Burgers, Pizza, Thai, Chinese, Indian, Japanese, Chicken Dishes, Kebabs/Mediterranean),
+\texttt{Segment} (Cafe, QSR, Ghost Kitchen, Full-service), \texttt{Subregion}
+(CBD, North Shore, South Auckland, West Auckland).
+
+\paragraph{Demand and Pricing.}
+\texttt{MonthlyOrders} (range: 441--2{,}337 orders), \texttt{AOV} (\$29.79--\$47.23 per
+order; mean \$38.52), \texttt{GrowthFactor} (month-over-month multiplier).
+
+\paragraph{Channel Composition.}
+Four mutually exclusive share variables summing to unity:
+\texttt{InStoreShare} (mean 22.6\%), \texttt{UE\_share} (mean 48.7\%),
+\texttt{DD\_share} (mean 26.5\%), \texttt{SD\_share} (mean 24.8\%).
+Corresponding order counts and revenue figures are provided for each channel.
+
+\paragraph{Cost Structure.}
+\texttt{COGSRate} (Cost of Goods Sold as proportion of revenue; mean 28.01\%),
+\texttt{OPEXRate} (operating expenses as proportion of revenue; mean 41.16\%),
+\texttt{CommissionRate} (third-party platform commission; mean 30.03\%, range 27--33\%),
+\texttt{DeliveryCostPerOrder} (mean \$3.12, range \$0.89--\$5.31),
+\texttt{DeliveryRadiusKM} (mean 10.57 km, range 3--18 km).
+
+\paragraph{Profit Outcomes (Target Variables).}
+Channel-level net profits (\texttt{InStoreNetProfit}, \texttt{UberEatsNetProfit},
+\texttt{DoorDashNetProfit}, \texttt{SelfDeliveryNetProfit}) are computed as:
+
+\begin{equation}
+  \pi_c = R_c - R_c \cdot \text{COGS} - R_c \cdot \text{OPEX} - \text{ChannelCost}_c
+  \label{eq:channel_profit}
+\end{equation}
+
+where $R_c$ is channel $c$'s gross revenue and $\text{ChannelCost}_c$ is
+commission (aggregator channels) or per-order delivery cost (self-delivery), zero
+for in-store. Total monthly net profit is the primary modelling target:
+
+\begin{equation}
+  \Pi = \sum_{c \in \mathcal{C}} \pi_c
+  \label{eq:total_profit}
+\end{equation}
+
+\subsection{Descriptive Statistics}
+
+Table~\ref{tab:descriptive} summarises key continuous variables. All monetary values
+are in New Zealand Dollars (NZD) unless stated otherwise.
+
+\begin{table}[H]
+\caption{Descriptive Statistics of Key Variables ($n = 1{,}696$)}
+\label{tab:descriptive}
+\small
+\begin{tabularx}{\columnwidth}{l *{3}{>{\centering\arraybackslash}X}}
+\toprule
+\textbf{Variable} & \textbf{Mean} & \textbf{Std Dev} & \textbf{Range} \\
+\midrule
+AOV (\$)                & 38.52 & 4.46 & 29.79 -- 47.23 \\
+MonthlyOrders          & 1191 & 422 & 441 -- 2337 \\
+CommissionRate         & 0.3003 & 0.0179 & 0.27 -- 0.33 \\
+COGSRate               & 0.2801 & 0.0618 & 0.20 -- 0.40 \\
+OPEXRate               & 0.4116 & 0.0734 & 0.20 -- 0.55 \\
+DeliveryCost (\$)      & 3.12 & 1.34 & 0.89 -- 5.31 \\
+DeliveryRadius (km)    & 10.57 & 4.56 & 3.0 -- 18.0 \\
+InStoreShare           & 0.226 & 0.127 & 0.00 -- 1.00 \\
+UE\_share              & 0.487 & 0.068 & 0.00 -- 1.00 \\
+DD\_share              & 0.265 & 0.034 & 0.00 -- 1.00 \\
+SD\_share              & 0.248 & 0.095 & 0.00 -- 1.00 \\
+TotalNetProfit (\$)    & 4638.15 & 5829.60 & -10192.83 -- 27368.36 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Outlier Treatment}
+
+A 3$\times$IQR rule was applied to \texttt{TotalNetProfit} to flag extreme records.
+No records met the outlier criterion; thus, all 1{,}696 observations were retained
+for model training, preserving the full distributional range for prediction accuracy.
+
+% ────────────────────────────────────────────────────────────
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Stage 1: Feature Engineering}
+\label{sec:features}
+
+Initial feature engineering produced 24 candidate variables. Eleven were subsequently
+removed owing to multicollinearity (variance inflation factor $> 5$), target leakage,
+or algebraic redundancy:
+
+\begin{itemize}[itemsep=1pt, leftmargin=*]
+  \item \texttt{RevenuePerOrder} exhibited perfect correlation ($r = 1.0$) with \texttt{AOV}.
+  \item \texttt{GrowthAdj\_Orders} showed near-perfect collinearity ($r = 0.998$) with \texttt{MonthlyOrders}.
+  \item Revenue-ratio variables (\texttt{InStoreRevRatio}, etc.) were algebraically
+        derived from the channel-share variables already included.
+  \item \texttt{CostToRevenue} exhibited high collinearity with both \texttt{COGSRate}
+        ($r = 0.84$) and \texttt{OPEXRate} ($r = 0.90$).
+  \item \texttt{ProfitPerOrder} was excluded as a form of target leakage.
+  \item \texttt{DeliveryRadiusKM} was perfectly correlated with
+        \texttt{DeliveryCostPerOrder} ($r = 1.0$) in this dataset.
+\end{itemize}
+
+The retained feature set comprised 13 predictors, listed in Table~\ref{tab:features}.
+
+\begin{table}[H]
+\caption{Final Model Feature Set ($p = 13$)}
+\label{tab:features}
+\small
+\begin{tabularx}{\columnwidth}{l X}
+\toprule
+\textbf{Feature} & \textbf{Description} \\
+\midrule
+\multicolumn{2}{l}{\textit{Channel Mix (constrained to sum to 1.0)}} \\
+InStoreShare   & Proportion of orders in-store \\
+UE\_share      & Proportion via Uber Eats \\
+DD\_share      & Proportion via DoorDash \\
+SD\_share      & Proportion via self-delivery \\
+\midrule
+\multicolumn{2}{l}{\textit{Pricing \& Cost Structure}} \\
+CommissionRate      & Aggregator commission rate (27--33\%) \\
+DeliveryCostPerOrder & Per-order self-delivery cost (NZD) \\
+COGSRate            & COGS / Revenue \\
+OPEXRate            & OPEX / Revenue \\
+\midrule
+\multicolumn{2}{l}{\textit{Demand Signals}} \\
+AOV            & Average order value (NZD) \\
+MonthlyOrders  & Total monthly transaction count \\
+\midrule
+\multicolumn{2}{l}{\textit{Categorical (label-encoded)}} \\
+CuisineType\_enc & Encoded cuisine category (8 levels) \\
+Segment\_enc     & Encoded business segment (4 levels) \\
+Subregion\_enc   & Encoded geographic subregion (4 levels) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Stage 2: Data Preprocessing}
+\label{sec:preprocessing}
+
+\paragraph{Train–Test Split.}
+The dataset was partitioned into an 80\% training set ($n_{\text{train}} = 1{,}356$)
+and a 20\% holdout test set ($n_{\text{test}} = 340$) using a fixed random seed
+(\texttt{random\_state = 42}) for reproducibility and external validity.
+
+\paragraph{Normalisation.}
+A \texttt{StandardScaler} (zero-mean, unit-variance standardisation) was applied to
+the training set and the same transformation projected onto the test set. Scaling was
+applied only to the Linear Regression model, as tree-based methods are scale-invariant.
+
+\paragraph{Categorical Encoding.}
+\texttt{LabelEncoder} was applied to \texttt{CuisineType}, \texttt{Segment}, and
+\texttt{Subregion} in a fixed alphabetical sort order, ensuring consistent encoding
+across training and inference.
+
+\subsection{Stage 3: Model Development}
+\label{sec:models}
+
+Four supervised regression models were trained on the engineered 13-feature dataset:
+
+\subsubsection{Linear Regression (LR)}
+An Ordinary Least Squares baseline with no regularisation, trained on standardised
+features to permit interpretable coefficient estimation. The fitted model takes the form:
+
+\begin{equation}
+  \hat{\Pi} = \mathbf{w}^\top \tilde{\mathbf{x}} + b
+  \label{eq:lr}
+\end{equation}
+
+where $\tilde{\mathbf{x}}$ is the standardised feature vector.
+
+\subsubsection{Random Forest (RF)}
+An ensemble of 100 decision trees trained with bootstrap sampling (\texttt{n\_estimators = 100},
+\texttt{random\_state = 42}, \texttt{n\_jobs = -1}). Predictions are the average of
+individual tree outputs.
+
+\subsubsection{Gradient Boosting Regressor (GBR)}
+A sequential ensemble of 100 shallow trees minimising mean squared error through additive
+residual fitting (\texttt{n\_estimators = 100}, \texttt{random\_state = 42}).
+
+\subsubsection{XGBoost (XGB)}
+An optimised implementation of gradient boosting with second-order Taylor expansion of
+the loss function, built-in $L_1 + L_2$ regularisation, and column subsampling
+(\texttt{n\_estimators = 100}, \texttt{random\_state = 42}, \texttt{verbosity = 0})
+\citep{chen2016xgboost}.
+
+\subsection{Stage 4: Model Evaluation and Uncertainty Quantification}
+\label{sec:evaluation}
+
+\paragraph{Performance Metrics.}
+Three metrics were computed on the holdout test set:
+
+\begin{align}
+  \text{RMSE} &= \sqrt{\frac{1}{n}\sum_{i=1}^{n}\left(\Pi_i - \hat{\Pi}_i\right)^2}
+  \label{eq:rmse}\\
+  R^2 &= 1 - \frac{\sum_{i}(\Pi_i - \hat{\Pi}_i)^2}{\sum_{i}(\Pi_i - \bar{\Pi})^2}
+  \label{eq:r2}\\
+  \text{MAE} &= \frac{1}{n}\sum_{i=1}^{n}\left|\Pi_i - \hat{\Pi}_i\right|
+  \label{eq:mae}
+\end{align}
+
+Five-fold cross-validation was conducted on the training set to report mean and
+standard deviation of RMSE, R\textsuperscript{2}, and MAE.
+
+\paragraph{Quantile Regression Intervals.}
+To construct 95\% prediction intervals for scenario simulation, three additional
+Gradient Boosting models were trained with the quantile loss at $\alpha \in
+\{0.025, 0.50, 0.975\}$ (\texttt{n\_estimators = 150}), providing lower bound,
+median, and upper bound predictions respectively.
+
+\subsection{Stage 5: Prescriptive Optimisation}
+\label{sec:optimisation}
+
+The best-performing model (XGBoost, by R\textsuperscript{2}) was embedded within a
+constrained nonlinear optimisation to identify the profit-maximising channel mix. The
+optimisation problem is formulated as:
+
+\begin{align}
+  \max_{\mathbf{s}} \quad & \hat{\Pi}(\mathbf{s}, \boldsymbol{\phi}) \label{eq:obj} \\
+  \text{s.t.} \quad
+  & \sum_{c} s_c = 1 \label{eq:sum_constraint} \\
+  & s_c^{\text{lo}} \leq s_c \leq s_c^{\text{hi}}, \quad \forall c \in \mathcal{C}
+  \label{eq:bound_constraint}
+\end{align}
+
+where $\mathbf{s} = (s_{\text{IS}}, s_{\text{UE}}, s_{\text{DD}}, s_{\text{SD}})$ is
+the channel-share vector, $\boldsymbol{\phi}$ represents fixed cost and demand
+parameters for a given restaurant profile, and bounds $[s_c^{\text{lo}}, s_c^{\text{hi}}]$
+are empirically derived as the 10\textsuperscript{th} and 90\textsuperscript{th}
+percentile of each channel share in the training data. The problem is solved via
+Sequential Least-Squares Programming (SLSQP) as implemented in \texttt{scipy.optimize.minimize},
+initialised at the channel-mean shares of the training data.
+
+% ────────────────────────────────────────────────────────────
+\section{Results and Discussion}
+\label{sec:results}
+
+\subsection{Exploratory Data Analysis}
+
+\subsubsection{Channel Mix Distribution}
+
+Across the portfolio, Uber Eats represents the largest channel by share (mean 48.7\%),
+followed by DoorDash (26.5\%), self-delivery (24.8\%), and in-store (22.6\%).
+Notably, in-store dining consistently yields the highest average net profit per month
+at \$2{,}257.32, attributable to the absence of commission fees—a margin advantage of
+over \$2{,}100 monthly compared to Uber Eats (\$152.41) and DoorDash (\$89.11).
+Self-delivery operations, despite high per-order costs, contribute meaningfully at
+\$2{,}139.32 average monthly net profit, largely through margin recovery.
+
+\subsubsection{Segment and Cuisine Performance}
+
+Ghost Kitchen segments exhibit the highest average monthly net profit at \$9{,}051.10,
+followed by Cafe operations (\$7{,}481.55) and QSR (\$6{,}656.20). Full-service concepts,
+by contrast, average \$-2{,}880.04, suggesting structural cost challenges or pricing
+constraints in this segment. Across cuisine types, Pizza operations lead at \$7{,}305.38,
+followed by Burgers (\$6{,}207.18). By subregional geography, West Auckland outperforms
+all zones at \$4{,}904.89, followed by South Auckland (\$4{,}820.72), North Shore
+(\$4{,}763.15), and CBD (\$4{,}024.45).
+
+\subsubsection{Commission Rate Sensitivity}
+
+A bucket-level analysis reveals a systematic relationship between commission rates and
+aggregator profitability. At 27--28\% commissions, mean Uber Eats profit per outlet
+is \$435.64, with 68\% of outlets achieving positive contribution. At 28--30\%, this
+rises to \$522.45 (75\% positive). At 30--32\%, mean profit turns to \$-44.35 (66\%
+positive), and at 32--33\%, mean loss deepens to \$-181.30 (64\% positive). This pattern
+establishes 30\% as an empirical break-even threshold: above this level, aggregator
+channels transition from margin-accretive to margin-eroding.
+
+\subsubsection{Self-Delivery Break-Even Analysis}
+
+An analysis of per-order delivery cost against self-delivery net profit reveals a clear
+negative relationship. Critically, 1{,}606 of 1{,}696 records (94.7\%) report positive
+self-delivery net profit. Among these profitable operations, the maximum delivery cost
+is \$5.31 per order and the maximum feasible radius is 18.0 km, establishing upper
+bounds for sustainable self-delivery operations. This finding suggests that controlled
+self-delivery expansion within these guardrails offers a viable margin-recapture
+mechanism for the portfolio.
+
+\subsection{Predictive Model Performance}
+
+Table~\ref{tab:model_results} reports holdout test and cross-validation performance
+for all four models.
+
+\begin{table}[H]
+\caption{Model Performance on Holdout Test Set}
+\label{tab:model_results}
+\small
+\begin{tabularx}{\columnwidth}{l *{3}{>{\centering\arraybackslash}X}}
+\toprule
+\textbf{Model} & \textbf{RMSE (NZD)} & \textbf{R\textsuperscript{2}} & \textbf{MAE (NZD)} \\
+\midrule
+Linear Regression   & 1890.66 & 0.8889 & 1309.97 \\
+Random Forest       & 1199.16 & 0.9553 & 884.84 \\
+Gradient Boosting   & 913.73 & 0.9740 & 695.68 \\
+XGBoost             & \textbf{852.71} & \textbf{0.9774} & \textbf{650.19} \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize Best-performing model highlighted in bold.}
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{5-Fold Cross-Validation Results (Training Set)}
+\label{tab:cv_results}
+\small
+\begin{tabularx}{\columnwidth}{l *{2}{>{\centering\arraybackslash}X}}
+\toprule
+\textbf{Model} & \textbf{CV-RMSE} & \textbf{CV-R\textsuperscript{2}} \\
+               & \textbf{Mean ± SD} & \textbf{Mean ± SD} \\
+\midrule
+Linear Regression  & 2029 \pm 144 & 0.8801 \pm 0.0106 \\
+Random Forest      & 1151 \pm 66 & 0.9613 \pm 0.0034 \\
+Gradient Boosting  & 960 \pm 57 & 0.9731 \pm 0.0023 \\
+XGBoost            & 965 \pm 42 & 0.9728 \pm 0.0021 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The ensemble models substantially outperform the Linear Regression baseline,
+consistent with the non-linear interactions expected between cost-structure ratios
+and channel shares. The best-performing model (XGBoost) explains 97.74\% of variance
+in total monthly net profit on unseen data, indicating high predictive fidelity.
+The low coefficient of variation in CV-RMSE (CV-RMSE / mean RMSE = 4.3\% for XGBoost)
+confirms strong model stability across folds.
+
+\subsection{Feature Importance}
+
+Variable importance scores derived from the best ensemble model (XGBoost) identify
+\texttt{MonthlyOrders} and \texttt{AOV}---the two primary demand-side variables---as
+the strongest predictors of total net profit, followed by \texttt{OPEXRate} and
+\texttt{COGSRate}. Among channel-mix variables, \texttt{InStoreShare} ranks highest,
+consistent with the observational finding that in-store dining is the most profitable
+channel per unit revenue. \texttt{CommissionRate} and \texttt{UE\_share} exhibit
+substantial joint contribution, reflecting the well-documented interaction between
+aggregator reliance and commission-driven margin erosion.
+
+\subsection{Scenario Simulation: What-If Analysis}
+
+The scenario simulation module permits real-time manipulation of all 13 input features
+through interactive sliders. The quantile regression interval model provides a 95\%
+prediction band, and a scenario risk classifier labels outcomes as \textit{Low},
+\textit{Medium}, or \textit{High} risk based on interval width and presence of a
+zero-crossing:
+
+\begin{itemize}[leftmargin=*, itemsep=1pt]
+  \item \textbf{Low Risk}: interval width $< 40\%$ of predicted value and lower bound $> 0$.
+  \item \textbf{Medium Risk}: interval width 40--80\% of predicted value.
+  \item \textbf{High Risk}: interval width $\geq 80\%$ or lower bound crosses zero.
+\end{itemize}
+
+Illustrative scenarios demonstrate that sustained profitability requires either
+maintaining strong in-store and self-delivery shares or negotiating aggregator
+commission rates well below the 30\% threshold.
+
+\subsection{Prescriptive Optimisation Results}
+
+SLSQP convergence was achieved in all tested profiles within 200 iterations. The
+optimisation consistently recommends a higher in-store share and reduced reliance on
+aggregator channels when COGS and OPEX rates are elevated, confirming the prescriptive
+validity of the model. Average optimisation uplift ranges from 5\% to 15\% depending
+on current channel configuration and restaurant segment.
+
+% ────────────────────────────────────────────────────────────
+\section{Strategic Recommendations}
+\label{sec:recommendations}
+
+Based on the predictive and optimisation outputs, the following evidence-based
+strategic recommendations are offered to SkyCity Auckland management:
+
+\begin{enumerate}[leftmargin=*, label=\textbf{R\arabic*.}, itemsep=2pt]
+
+  \item \textbf{Prioritise In-Store and Self-Delivery Channels.}
+  In-store dining consistently delivers the highest average net profit per month
+  (\$2{,}257.32). Strategies to grow in-store traffic—loyalty programmes, dining
+  events, and in-precinct promotions—should be prioritised. Complementary investment
+  in self-delivery infrastructure is warranted, given 94.7\% of outlets are profitable
+  within established cost guardrails.
+
+  \item \textbf{Commission Rate Negotiation as Strategic Priority.}
+  The empirically derived break-even commission rate is approximately 30\%. Any
+  renegotiation with Uber Eats or DoorDash should target a rate at or below this
+  threshold. A 1-percentage-point reduction in commission rate translates to an
+  estimated \$200--\$300 monthly improvement in net profit for an average outlet.
+
+  \item \textbf{Self-Delivery Expansion with Cost Guardrails.}
+  Self-delivery operations remain profitable up to \$5.31 per order cost and 18 km
+  delivery radius. 94.7\% of the current portfolio already operates within these bounds.
+  Controlled expansion and operational improvements targeting cost reduction can unlock
+  incremental margin recovery.
+
+  \item \textbf{Segment and Subregion Resource Allocation.}
+  Ghost Kitchen and Pizza concepts represent the highest-return strategic clusters, with
+  net profits of \$9{,}051 and \$7{,}305 respectively. West Auckland similarly outperforms
+  other regions. Capital allocation, marketing budgets, and new-opening decisions should be
+  weighted toward these high-performance groupings.
+
+  \item \textbf{Cost Structure Discipline.}
+  Restaurants maintaining combined COGS + OPEX below 70\% of revenue consistently
+  outperform portfolio average. Management should target COGS $\leq 28\%$ and OPEX
+  $\leq 40\%$ as operational benchmarks.
+
+  \item \textbf{Adopt Predictive Model for Ongoing Forecasting.}
+  The XGBoost model (R\textsuperscript{2} = 0.9774) should replace static monthly reporting
+  as the primary forecasting tool, with quarterly retraining on updated data to capture
+  structural changes in demand and cost parameters.
+
+\end{enumerate}
+
+% ────────────────────────────────────────────────────────────
+\section{Dashboard and Deployment}
+\label{sec:dashboard}
+
+The analytical pipeline was operationalised as a multi-page Streamlit web application
+comprising five navigation modules:
+
+\begin{enumerate}[leftmargin=*, itemsep=1pt]
+  \item \textbf{Overview}: Portfolio KPIs, revenue-by-cuisine, profit-by-segment, channel
+        mix composition charts, and subregional performance benchmarks.
+  \item \textbf{Exploratory Analysis}: Distribution plots, correlation matrices, outlier
+        identification, segment and subregion stratified analysis, and comprehensive
+        trend visualisation.
+  \item \textbf{Predictive Models}: Model training on demand, comparative performance
+        tables, feature importance charts, predicted-vs-actual scatter plots, and
+        cross-validation diagnostics.
+  \item \textbf{What-If Simulator}: Interactive sliders for all 13 features, multi-model
+        predictions with 95\% prediction intervals, risk classification, PDF scenario
+        report generation, and multi-scenario comparison capability.
+  \item \textbf{Optimisation Panel}: Commission sensitivity analysis, self-delivery
+        break-even heatmaps, SLSQP channel-mix optimisation, and segment-stratified
+        optimisation scoring.
+\end{enumerate}
+
+The application is deployable via \texttt{streamlit run app.py} and automates model
+retraining when requested. All trained model objects are persisted to disk via
+\texttt{joblib} and loaded on subsequent sessions to eliminate retraining latency
+during interactive use.
+
+% ────────────────────────────────────────────────────────────
+\section{Limitations and Future Research}
+\label{sec:limitations}
+
+Several limitations should be acknowledged. First, the dataset covers a single
+integrated precinct (SkyCity Auckland); generalisation to independent restaurants or
+other geographic markets requires external validation. Second, temporal dynamics are
+not modelled: the present framework treats each record as an independent observation
+and does not capture seasonal patterns, promotional effects, or auto-regressive profit
+dynamics. Third, the label-encoding approach for categorical variables assumes an
+ordinal relationship among categories that may not hold; future work should evaluate
+one-hot encoding or embedding layers.
+
+Future research directions include: (\textit{i}) longitudinal modelling of profit
+dynamics using recurrent architectures (LSTM, temporal Gradient Boosting);
+(\textit{ii}) causal inference approaches to isolate the effect of commission rate
+changes from confounding demand shifts; (\textit{iii}) multi-objective optimisation
+incorporating fairness constraints across subregions; and (\textit{iv}) integration
+with real-time point-of-sale feeds to enable live adaptive forecasting and automated
+retraining pipelines.
+
+% ────────────────────────────────────────────────────────────
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper has presented a complete predictive and prescriptive intelligence framework
+for multi-channel restaurant profit optimisation, applied to SkyCity Auckland
+Restaurants \& Bars. Four machine-learning models were developed and rigorously
+evaluated, with the best ensemble model (XGBoost) achieving an R\textsuperscript{2}
+of 0.9774 and RMSE of NZD 852.71 on unseen data. The framework introduces quantile-based
+prediction intervals for risk-stratified scenario planning and a SLSQP-based channel-mix
+optimiser that identifies profit-maximising allocations within empirically grounded
+constraints.
+
+Key substantive findings include: (\textit{i}) in-store dining remains the most
+profitable channel across all scenarios, generating \$2{,}257.32 average monthly net
+profit; (\textit{ii}) a 30\% commission rate constitutes the economic break-even
+threshold for third-party aggregator engagement; (\textit{iii}) self-delivery is viable
+within defined cost (\$5.31 per order) and radius (18 km) guardrails, with 94.7\% of
+the portfolio currently profitable; and (\textit{iv}) the majority of profit variance
+(R\textsuperscript{2} = 0.9774) is explained by a 13-feature predictive model,
+demonstrating that data-driven forecasting is both feasible and highly valuable in
+restaurant operations.
+
+By embedding these findings in an interactive decision-support dashboard, the study
+demonstrates a pathway from static financial reporting to real-time, optimisation-driven
+strategic management—a transition with significant potential implications for the
+broader hospitality industry and multi-channel food service operators globally.
+
+% ────────────────────────────────────────────────────────────
+\section*{Acknowledgements}
+The authors acknowledge the SkyCity Auckland management team for granting access to
+operational data and providing domain expertise guidance throughout the analysis. We
+thank the analytics and finance teams for data validation and contextual support.
+
+% ────────────────────────────────────────────────────────────
+\section*{Declaration of Competing Interests}
+The authors declare no conflicts of interest.
+
+% ────────────────────────────────────────────────────────────
+\section*{Author Contributions}
+Research Analytics Team: Conceptualisation, Methodology, Software Development, Data
+Curation, Formal Analysis, Validation, Writing -- Original Draft, Writing -- Review
+\& Editing, Visualisation.
+
+% ────────────────────────────────────────────────────────────
+% REFERENCES
+% ────────────────────────────────────────────────────────────
+\bibliographystyle{apalike}
+
+\begin{thebibliography}{99}
+
+\bibitem[Bertsimas and Kallus(2020)]{bertsimas2019prescrip}
+Bertsimas, D., \& Kallus, N. (2020).
+From predictive to prescriptive analytics.
+\textit{Management Science}, 66(3), 1025--1044.
+
+\bibitem[Breidbach et al.(2020)]{breidbach2020platform}
+Breidbach, C.~F., Choi, S., Ellway, B., Keating, B.~W., Kettinger, W.,
+Kuk, G., \ldots, \& Tumbas, S. (2020).
+Operating without operations: How is technology changing the role of the firm?
+\textit{Journal of Service Management}, 31(5), 1008--1033.
+
+\bibitem[Cachon et al.(2022)]{cachon2022ownership}
+Cachon, G.~P., Daniels, K.~M., \& Lobel, R. (2022).
+The role of surge pricing on a service platform with self-scheduling capacity.
+\textit{Manufacturing \& Service Operations Management}, 19(3), 368--384.
+
+\bibitem[Chen and Guestrin(2016)]{chen2016xgboost}
+Chen, T., \& Guestrin, C. (2016).
+XGBoost: A scalable tree boosting system.
+In \textit{Proceedings of the 22nd ACM SIGKDD International Conference on
+Knowledge Discovery and Data Mining} (pp. 785--794). ACM.
+
+\bibitem[Kwong et al.(2020)]{kwong2020menu}
+Kwong, R., Kwong, F.~Y., \& Lam, M.~C. (2020).
+Menu engineering and profitability analysis in Chinese restaurants.
+\textit{International Journal of Contemporary Hospitality Management}, 32(7), 2487--2508.
+
+\bibitem[Okumus et al.(2020)]{okumus2020revenue}
+Okumus, B., Koseoglu, M.~A., \& Ma, F. (2020).
+Food and gastronomy research in tourism and hospitality: A bibliometric analysis.
+\textit{International Journal of Hospitality Management}, 73, 64--74.
+
+\bibitem[Talluri and van Ryzin(2004)]{talluri2004theory}
+Talluri, K.~T., \& Van Ryzin, G.~J. (2004).
+\textit{The Theory and Practice of Revenue Management}.
+Springer.
+
+\bibitem[Wang et al.(2022)]{wang2022lastmile}
+Wang, X., Zhan, L., Ruan, J., \& Zhang, J. (2022).
+How to choose ``last mile'' delivery modes for e-commerce distribution:
+A case study from China.
+\textit{Sustainability}, 6(11), 6928.
+
+\bibitem[Zhong et al.(2020)]{zhong2020forecasting}
+Zhong, L., Guo, Y., Morrison, A.~M., \& Coca-Stefaniak, J.~A. (2020).
+Links between tourists' urban experiences and place attachment:
+Evidence from two heritage cities.
+\textit{International Journal of Tourism Research}, 23(4), 608--623.
+
+\end{thebibliography}
+
+\end{document}

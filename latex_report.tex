@@ -1,0 +1,113 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{siunitx}
+
+\title{Predictive Modeling and Profit Optimization for Multi-Channel Restaurant Operations}
+\author{Emergent Agent / Rohan Patil}
+\date{March 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The rapid expansion of third-party delivery platforms has fundamentally altered restaurant operating economics by introducing new revenue channels alongside platform commission costs, fulfillment expenses, and margin complexity. This study presents an integrated analytical platform for multi-channel restaurant profitability decision-making, developed using historical operational data from 1,696 restaurant configurations within the SkyCity Auckland network. The decision-support system synthesizes exploratory analytics, supervised learning, formal uncertainty quantification, scenario simulation, and constrained optimization within a single interactive Streamlit application designed for operational managers.
+\end{abstract}
+
+\section{Introduction}
+\subsection{Context and Motivation}
+Third-party delivery platforms—including Uber Eats, DoorDash, and regional delivery services—have become central to modern restaurant revenue models. While these platforms expand market access and convenience, they introduce distinct economic trade-offs: platform commissions typically range from 15\% to 30\% of order value, delivery fulfillment costs must be absorbed or passed to consumers, and channel-specific net margins can differ substantially from in-store operations. Consequently, restaurant managers face a non-trivial multi-objective optimization problem.
+
+\subsection{Research Question and Objectives}
+\begin{quote}
+How can predictive modeling, formal uncertainty quantification, and constrained optimization be combined to operationalize data-driven channel-mix and cost-allocation decisions in a multi-channel restaurant environment?
+\end{quote}
+
+We answer this through a Streamlit-based platform that integrates:
+\begin{itemize}
+  \item Descriptive analytics: exploratory visualizations, channel performance summaries, KPIs.
+  \item Predictive analytics: four ML models for Total Monthly Net Profit plus secondary margin models.
+  \item Uncertainty quantification: residual-based intervals and quantile regression bands.
+  \item Prescriptive optimization: SLSQP channel-mix recommendations within empirically derived bounds.
+\end{itemize}
+
+\section{Problem Statement and Business Context}
+\subsection{The economics problem}
+SkyCity Auckland Restaurants & Bars operates a portfolio across diverse concepts. Each location balances four channels: In-Store, Uber Eats, DoorDash, Self-Delivery. The optimization problem is to maximize TotalNetProfit while respecting commission, delivery cost, demand mixing and operational constraints.
+
+\subsection{Limitations of existing approaches}
+Existing tools are mostly descriptive (dashboards, spreadsheets), lacking predictive or risk-aware recommendation capabilities. This project addresses this gap by delivering an interactive decision-support system.
+
+\section{Data and Methodology}
+\subsection{Dataset}
+1,696 cross-sectional restaurant observations from SkyCity Auckland (2024; 8 cuisine types, 4 segments, 4 subregions).
+
+\subsection{Feature Engineering}
+25 features including interaction terms (Commission\_UE, DeliveryCost\_SD), ratio metrics, and unit economics. Categorical variables were label-encoded.
+
+\subsection{Modeling Approach}
+Primary target: Total Monthly Net Profit with Linear Regression, Random Forest, Gradient Boosting, XGBoost. Secondary targets: Net Profit per Order and Overall Margin (RF, XGBoost). Quantile regression at $\tau=0.025,0.5,0.975$ for uncertainty.
+
+\section{Results}
+\subsection{Primary Model Performance}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/model_performance_table.png}
+  \caption{Model performance table (RMSE, MAE, R\textsuperscript{2}).}
+  \label{fig:model-table}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/model_rmse.png}
+  \caption{RMSE by model.}
+  \label{fig:model-rmse}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/model_r2.png}
+  \caption{R\textsuperscript{2} by model.}
+  \label{fig:model-r2}
+\end{figure}
+
+XGBoost performed best with test RMSE = \$317.46, MAE = \$220.09, R\textsuperscript{2} = 0.9969.
+
+\subsection{Quantile Uncertainty}
+Coverage 82.94\%, average interval width \$5,612.13.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/pred_vs_actual.png}
+  \caption{Predicted vs actual Net Profit for best model.}
+  \label{fig:pred-act}
+\end{figure}
+
+\subsection{Exploratory Visuals}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/cuisine_revenue.png}
+  \caption{Average revenue by cuisine type.}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/segment_profit.png}
+  \caption{Average net profit by segment.}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/channel_mix.png}
+  \caption{Average channel mix.}
+\end{figure}
+
+\section{Discussion}
+Ensemble models dominate linear, demonstrating nonlinear interactions between commission, delivery cost and channel share. Prescriptive optimization yields actionable channel mix recommendations.
+
+\section{Conclusion}
+Completes end-to-end pipeline with model training, uncertainty quantification, and SLSQP-based optimization. Provides interactivity through Streamlit.
+
+\end{document}
