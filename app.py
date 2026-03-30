@@ -24,6 +24,10 @@ try:
 except ImportError:
     HAS_SCIPY = False
 
+# ── Initialize session state to prevent re-running ──
+if "initialized" not in st.session_state:
+    st.session_state.initialized = True
+
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="SkyCity Profit Optimizer",
@@ -124,8 +128,19 @@ st.markdown("""
 # ────────────────────────────────────────────────────────────────────────────
 DATA_FILENAME = "SkyCity Auckland Restaurants & Bars - SkyCity Auckland Restaurants & Bars.csv"
 _local_data_path = Path(__file__).resolve().parent / DATA_FILENAME
-_container_data_path = Path("/app") / DATA_FILENAME
-DATA_PATH  = _local_data_path if _local_data_path.exists() else _container_data_path
+_container_data_path = Path("/app/main") / DATA_FILENAME
+_root_container_path = Path("/app") / DATA_FILENAME
+
+# Try multiple paths for Streamlit Cloud compatibility
+if _local_data_path.exists():
+    DATA_PATH = _local_data_path
+elif _container_data_path.exists():
+    DATA_PATH = _container_data_path
+elif _root_container_path.exists():
+    DATA_PATH = _root_container_path
+else:
+    DATA_PATH = _local_data_path  # fallback, will error with clear message
+
 MODEL_DIR  = Path(__file__).resolve().parent / "models"
 
 
@@ -147,9 +162,18 @@ def load_models_from_disk():
     return None
 
 
-@st.cache_data
+@st.cache_data(show_spinner=True)
 def load_data():
-    df = pd.read_csv(DATA_PATH)
+    if not DATA_PATH.exists():
+        st.error(f"❌ **Data file not found!**\n\nExpected file at: `{DATA_PATH}`\n\nPlease ensure the CSV file is in the repository root or at `/app/main/`")
+        st.stop()
+    
+    try:
+        df = pd.read_csv(DATA_PATH)
+    except Exception as e:
+        st.error(f"❌ **Error loading data file:** {str(e)}\n\nFile path: `{DATA_PATH}`")
+        st.stop()
+    
     # Derived features
     df["TotalRevenue"]   = df["InStoreRevenue"] + df["UberEatsRevenue"] + df["DoorDashRevenue"] + df["SelfDeliveryRevenue"]
     df["TotalNetProfit"] = df["InStoreNetProfit"] + df["UberEatsNetProfit"] + df["DoorDashNetProfit"] + df["SelfDeliveryNetProfit"]
@@ -665,7 +689,7 @@ df = load_data()
 # PAGE 1 — OVERVIEW
 # ════════════════════════════════════════════════════════════════════════════
 if page == "Overview":
-    section_header("Predictive Modeling and Profit Optimization for Multi-Channel Restaurant Operations")
+    section_header("Portfolio Overview", "High-level summary of SkyCity Auckland restaurant operations")
 
     # KPI row
     c1, c2, c3, c4, c5 = st.columns(5)
